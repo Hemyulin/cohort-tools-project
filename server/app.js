@@ -5,19 +5,14 @@ const PORT = 5005;
 const cohorts = require("./cohorts.json");
 const students = require("./students.json");
 const cors = require("cors");
-
-// STATIC DATA
-// Devs Team - Import the provided files with JSON data of students and cohorts here:
-// ...
-
-// INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
+const mongoose = require("mongoose");
 const app = express();
 
-// MIDDLEWARE
-// Research Team - Set up CORS middleware here:
+mongoose
+  .connect("mongodb://127.0.0.1:27017")
+  .then(console.log("Connected to mongodb"))
+  .catch((err) => console.log(err));
 
-// Use the cors middleware without any options to allow
-// requests from any IP address and domain.
 app.use(cors());
 
 // Use the CORS middleware with options to allow requests
