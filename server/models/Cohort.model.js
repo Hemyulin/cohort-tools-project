@@ -13,7 +13,7 @@ const StudentSchema = new Schema({
   background: String,
   image: String,
   cohort: Number,
-  projects: [String], // Assuming projects is an array of strings
+  projects: [String],
 });
 
 module.exports = mongoose.model("Student", StudentSchema);
