@@ -1,27 +1,24 @@
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
 const PORT = 5005;
 const cohorts = require("./cohorts.json");
 const students = require("./students.json");
 const cors = require("cors");
-
-// STATIC DATA
-// Devs Team - Import the provided files with JSON data of students and cohorts here:
-// ...
-
-// INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
 const app = express();
 
-// MIDDLEWARE
-// Research Team - Set up CORS middleware here:
+mongoose
+  .connect("mongodb://127.0.0.1:27017")
+  .then((x) =>
+    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+  )
+  .catch((err) => {
+    console.error("Error connecting to mongo", err);
+  });
 
-// Use the cors middleware without any options to allow
-// requests from any IP address and domain.
 app.use(cors());
 
-// Use the CORS middleware with options to allow requests
-// from specific IP addresses and domains.
 app.use(
   cors({
     // Add the URLs of allowed origins to this array
@@ -29,7 +26,7 @@ app.use(
   })
 );
 
-// ...
+// ...27017
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static("public"));
@@ -50,7 +47,24 @@ app.get("/api/cohorts", (req, res) => {
 
 app.get("/api/students", (req, res) => {
   res.json(students);
+  console.log("api/students route ahoy");
 });
+
+// Student Routes
+
+// POST /api/students - Creates a new student
+
+// GET /api/students - Retrieves all of the students in the database collection
+
+// GET /api/students/cohort/:cohortId - Retrieves all of the students for a given cohort
+
+// GET /api/students/:studentId - Retrieves a specific student by id
+
+// PUT /api/students/:studentId - Updates a specific student by id
+
+// DELETE /api/students/:studentId - Deletes a specific student by id
+
+// Cohort Routes
 
 // START SERVER
 app.listen(PORT, () => {
