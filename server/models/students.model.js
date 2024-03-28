@@ -12,7 +12,7 @@ const studentSchema = new Schema({
   program: String,
   background: String,
   image: String,
-  cohort: String,
+  cohort: { type: Schema.Types.ObjectId, ref: "Cohort" },
   projects: [String],
 });
 

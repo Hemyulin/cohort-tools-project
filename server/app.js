@@ -40,6 +40,7 @@ app.get("/docs", (req, res) => {
 // DONE AND WORKING! POST /api/students - Creates a new student
 app.post("/api/students", (req, res) => {
   StudentModel.create(req.body)
+    .populate("cohort")
     .then((newStudent) => {
       res.status(201).json(newStudent);
     })
@@ -52,6 +53,7 @@ app.post("/api/students", (req, res) => {
 // DONE AND WORKING! GET /api/students - Retrieves all of the students in the database collection
 app.get("/api/students", (req, res) => {
   StudentModel.find()
+    .populate("cohort")
     .then((students) => {
       console.log(students);
       res.status(200).json(students);
@@ -67,6 +69,7 @@ app.get("/api/students/cohort/:cohortId", (req, res) => {
   const cohortId = req.params.cohortId;
 
   StudentModel.find({ cohort: cohortId })
+    .populate("cohort")
     .then((students) => {
       res.status(200).json(students);
     })
@@ -80,6 +83,7 @@ app.get("/api/students/cohort/:cohortId", (req, res) => {
 app.get("/api/students/:studentId", (req, res) => {
   const { studentId } = req.params;
   StudentModel.findById(studentId)
+    .populate("cohort")
     .then((student) => {
       if (!student) {
         return res.status(404).json({ message: "Student not found!" });
@@ -97,6 +101,7 @@ app.put("/api/students/:studentId", (req, res) => {
   const studentId = req.params.studentId;
 
   StudentModel.findByIdAndUpdate(studentId, req.body, { new: true })
+    .populate("cohort")
     .then((updatedStudent) => {
       if (!updatedStudent) {
         return res.status(500).json({ error: "Student not found" });
