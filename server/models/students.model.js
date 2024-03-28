@@ -12,7 +12,7 @@ const studentSchema = new Schema({
   program: String,
   background: String,
   image: String,
-  cohort: Number,
+  cohort: String,
   projects: [String],
 });
 
