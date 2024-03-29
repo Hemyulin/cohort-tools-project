@@ -5,7 +5,7 @@ const PORT = 5005;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
-const StudentModel = require("./models/students.model-temp");
+const StudentModel = require("./models/students.model");
 const CohortModel = require("./models/cohort.model");
 
 // DONE Connect to Mongoose
