@@ -40,7 +40,6 @@ app.get("/docs", (req, res) => {
 // DONE AND WORKING! POST /api/students - Creates a new student
 app.post("/api/students", (req, res) => {
   StudentModel.create(req.body)
-    .populate("cohort")
     .then((newStudent) => {
       res.status(201).json(newStudent);
     })
