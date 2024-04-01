@@ -5,8 +5,14 @@ const PORT = 5005;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
-const StudentModel = require("./models/students.model");
+const StudentModel = require("./students.model");
 const CohortModel = require("./models/cohort.model");
+
+// MICHAEL_ TO REVIEW// Define error-handling middleware
+const errorHandler = (err, req, res, next) => {
+  console.error(err); // Log the error for debugging purposes
+  res.status(500).json({ error: "Internal Server Error" }); // Send an appropriate error response to the client
+};
 
 // DONE Connect to Mongoose
 
@@ -25,6 +31,9 @@ app.use(
   })
 );
 
+// MICHAEL_ TO REVIEW//
+// Mount the error-handling middleware as the last middleware in your Express app
+app.use(errorHandler);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static("public"));
@@ -220,6 +229,10 @@ app.delete("/api/cohorts/:cohortId", (req, res) => {
       res.status(500).json({ error: "Couldn't delete cohort" });
     });
 });
+
+// MICHAEL_ TO REVIEW//
+// Mount the error-handling middleware as the last middleware in your Express app
+app.use(errorHandler);
 
 // START SERVER
 app.listen(PORT, () => {
