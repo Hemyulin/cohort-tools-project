@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 // Encryption for password
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-require("dotenv/config");
+require("dotenv").config();
 
-const User = require("../User.model");
+const User = require("../models/user.model");
 const bcrypt = require("bcryptjs/dist/bcrypt");
 
 const { isAuthenticated } = require("../middleware/jwt.middleware");
@@ -14,6 +14,7 @@ const { isAuthenticated } = require("../middleware/jwt.middleware");
 // POST /auth/signup
 router.post("/auth/signup", (req, res, next) => {
   const { email, name, password } = req.body;
+  console.log("This code is running");
 
   //check if email, password, name is provided
   if (email === "" || name === "" || password === "") {

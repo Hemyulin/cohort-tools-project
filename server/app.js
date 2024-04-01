@@ -1,12 +1,20 @@
+const mongoose = require("mongoose");
 const express = require("express");
+const app = express();
 const morgan = require("morgan");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const PORT = 5005;
-const cors = require("cors");
-const mongoose = require("mongoose");
-const app = express();
 const StudentModel = require("./models/students.model");
 const CohortModel = require("./models/cohort.model");
+const auth = require("./routes/auth.routes");
+
+app.use(express.json());
+app.use(morgan("dev"));
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(auth);
 
 // MICHAEL_ TO REVIEW// Define error-handling middleware
 const errorHandler = (err, req, res, next) => {
@@ -14,7 +22,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(500).json({ error: "Internal Server Error" }); // Send an appropriate error response to the client
 };
 
-// DONE Connect to Mongoose
+app.use(errorHandler);
 
 mongoose
   .connect("mongodb://127.0.0.1:27017")
@@ -31,14 +39,10 @@ app.use(
   })
 );
 
+// DONE Connect to Mongoose
+
 // MICHAEL_ TO REVIEW//
 // Mount the error-handling middleware as the last middleware in your Express app
-app.use(errorHandler);
-app.use(express.json());
-app.use(morgan("dev"));
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
@@ -232,7 +236,6 @@ app.delete("/api/cohorts/:cohortId", (req, res) => {
 
 // MICHAEL_ TO REVIEW//
 // Mount the error-handling middleware as the last middleware in your Express app
-app.use(errorHandler);
 
 // START SERVER
 app.listen(PORT, () => {
