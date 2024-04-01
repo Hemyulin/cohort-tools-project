@@ -11,7 +11,7 @@ const bcrypt = require("bcryptjs/dist/bcrypt");
 
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
-// POST /auth/signup
+// WORKING!!! POST /auth/signup
 router.post("/auth/signup", (req, res, next) => {
   const { email, name, password } = req.body;
   console.log("This code is running");
