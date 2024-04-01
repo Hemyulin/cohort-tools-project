@@ -5,7 +5,7 @@ const PORT = 5005;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
-const StudentModel = require("./students.model");
+const StudentModel = require("./models/students.model");
 const CohortModel = require("./models/cohort.model");
 
 // MICHAEL_ TO REVIEW// Define error-handling middleware
