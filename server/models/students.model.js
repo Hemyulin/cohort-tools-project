@@ -1,28 +1,21 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 
-const studentsSchema = new Schema({
-	firstName: { type: String },
-	lastName: { type: String },
-	email: {
-		type: String,
-	},
-	format: { type: String },
-	phone: {
-		type: Number,
-	},
-	linkedinUrl: { type: String },
-	languages: {
-		type: String,
-		enum: ["English", "Dutch", "German", "French", "Spanish"],
-	},
-	program: { type: String },
-	background: { type: String },
-	image: { type: String },
-	cohort: { type: Number },
-	projects: { type: Array },
+const studentSchema = new Schema({
+  firstName: String,
+  lastName: String,
+  email: String,
+  phone: String,
+  linkedinUrl: String,
+  languages: [String],
+  program: String,
+  background: String,
+  image: String,
+  cohort: { type: Schema.Types.ObjectId, ref: "Cohort" },
+  projects: [String],
 });
 
-const Students = mongoose.model("Students", studentsSchema);
+const Student = mongoose.model("Student", studentSchema);
 
-module.exports = Students;
+module.exports = Student;
